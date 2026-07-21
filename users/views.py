@@ -111,8 +111,7 @@ class ChangePassword(PasswordChangeView):
 def sign_out(request):
     if request.method == 'POST':
         logout(request)
-        return redirect('sign-in')
-
+    return redirect('sign-in')
 
 def activate_user(request, user_id, token):
     try:
