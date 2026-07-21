@@ -164,6 +164,9 @@ class CreateTask(ContextMixin, LoginRequiredMixin, PermissionRequiredMixin, View
             context = self.get_context_data(
                 task_form=task_form, task_detail_form=task_detail_form)
             return render(request, self.template_name, context)
+        
+        context = self.get_context_data(task_form=task_form, task_detail_form=task_detail_form)
+        return render(request, self.template_name, context)
 
 
 @login_required
