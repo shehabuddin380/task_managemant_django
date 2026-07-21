@@ -39,7 +39,7 @@ def is_manager(user):
 
 
 def is_employee(user):
-    return user.groups.filter(name='Manager').exists()
+    return user.groups.filter(name='Employee').exists()
 
 
 @user_passes_test(is_manager, login_url='no-permission')
