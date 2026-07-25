@@ -88,6 +88,17 @@ def manager_dashboard(request):
     }
     return render(request, "dashboard/manager-dashboard.html", context)
 
+@user_passes_test(is_employee)
+def employee_dashboard(request):
+    counts = Task.objects.filter(assigned_to=request.user).aggregate(
+        total=Count('id'),
+        completed=Count('id', filter=Q(status='COMPLETED')),
+        in_progress=Count('id', filter=Q(status='IN_PROGRESS')),
+        pending=Count('id', filter=Q(status='PENDING')),
+    )
+    tasks = Task.objects.filter(assigned_to=request.user).select_related('details')
+    context = {"counts": counts, "tasks": tasks, "role": "employee"}
+    return render(request, "dashboard/user-dashboard.html", context)
 
 @user_passes_test(is_employee)
 def employee_dashboard(request):
