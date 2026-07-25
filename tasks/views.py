@@ -100,11 +100,6 @@ def employee_dashboard(request):
     context = {"counts": counts, "tasks": tasks, "role": "employee"}
     return render(request, "dashboard/user-dashboard.html", context)
 
-@user_passes_test(is_employee)
-def employee_dashboard(request):
-    return render(request, "dashboard/user-dashboard.html")
-
-
 @login_required
 @permission_required("tasks.add_task", login_url='no-permission')
 def create_task(request):
