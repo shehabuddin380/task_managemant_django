@@ -210,14 +210,12 @@ class CustomPasswordResetView(PasswordResetView):
         context = super().get_context_data(**kwargs)
         context['protocol'] = 'https' if self.request.is_secure() else 'http'
         context['domain'] = self.request.get_host()
-        print(context)
         return context
 
     def form_valid(self, form):
         messages.success(
             self.request, 'A Reset email sent. Please check your email')
         return super().form_valid(form)
-
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     form_class = CustomPasswordResetConfirmForm
