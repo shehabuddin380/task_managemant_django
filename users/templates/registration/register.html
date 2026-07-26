@@ -3,7 +3,7 @@
     <div class='w-1/2 mx-auto my-9'>
         {% if form.non_field_errors %}
             {% for error in form.non_field_errors %}
-                {{ error }}
+                <div class="px-2 py-1 bg-red-100 text-red-700 rounded mb-3">{{ error }}</div>
             {% endfor %}
         {% endif %}
         <form action="" method="POST">
@@ -12,7 +12,6 @@
                <p>
                     <label for="{{ field.id_for_label }}"> {{field.label}} </label>
                     {{ field }}
-
                     {% if field.errors %}
                             <ul>
                                 {% for error in field.errors %}
@@ -25,4 +24,4 @@
             <button class="bg-blue-500 px-2 py-1 rounded mt-3 text-white mt-3" type="submit">Sign Up</button>
         </form>
     </div>
-    {% endblock content %}
+{% endblock content %}
