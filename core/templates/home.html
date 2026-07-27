@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block title %}TaskMaster - Home{% endblock %}
 {% block content %}
 <!-- Hero Section -->
@@ -10,11 +10,7 @@
       <p class="text-xl mb-12">
         Empower your team with our intuitive task management solution
       </p>
-      
-        href="{% url 'sign-up' %}"
-        class="bg-white text-blue-600 px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition duration-300"
-        >Get Started</a
-      >
+      <a href="{% url 'sign-up' %}" class="bg-white text-blue-600 px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition duration-300">Get Started</a>
     </div>
   </section>
 
@@ -25,7 +21,6 @@
         Tailored for Every Role
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-        <!-- Admin Card -->
         <div class="bg-white rounded-lg shadow-md p-8">
           <h3 class="text-2xl font-semibold mb-6">Admin</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-3">
@@ -35,7 +30,6 @@
             <li>Monitor team performance</li>
           </ul>
         </div>
-        <!-- Manager Card -->
         <div class="bg-white rounded-lg shadow-md p-8">
           <h3 class="text-2xl font-semibold mb-6">Manager</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-3">
@@ -45,7 +39,6 @@
             <li>Generate team performance reports</li>
           </ul>
         </div>
-        <!-- Employee Card -->
         <div class="bg-white rounded-lg shadow-md p-8">
           <h3 class="text-2xl font-semibold mb-6">Employee</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-3">
@@ -68,11 +61,7 @@
       <p class="text-xl mb-12">
         Join thousands of organizations already using TaskMaster
       </p>
-      
-        href="{% url 'sign-up' %}"
-        class="bg-blue-500 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-blue-600 transition duration-300"
-        >Start Free Trial</a
-      >
+      <a href="{% url 'sign-up' %}" class="bg-blue-500 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-blue-600 transition duration-300">Start Free Trial</a>
     </div>
   </section>
   {% endblock %}
