@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import Group
 from django.contrib.auth import login, logout
+from django.db import IntegrityError
 from users.forms import CustomRegistrationForm, AssignRoleForm, CreateGroupForm, CustomPasswordChangeForm, CustomPasswordResetForm, CustomPasswordResetConfirmForm, EditProfileForm
-from django.contrib import messages
 from django.contrib import messages
 from users.forms import LoginForm
 from django.contrib.auth.tokens import default_token_generator
@@ -70,14 +70,19 @@ def sign_up(request):
     if request.method == 'POST':
         form = CustomRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data.get('password1'))
-            user.is_active = False
-            user.save()
-            messages.success(
-                request, 'A Confirmation mail sent. Please check your email')
-            return redirect('sign-in')
-
+            try:
+                user = form.save(commit=False)
+                user.set_password(form.cleaned_data.get('password1'))
+                user.is_active = False
+                user.save()
+                messages.success(
+                    request, 'A Confirmation mail sent. Please check your email')
+                return redirect('sign-in')
+            except IntegrityError:
+                # Extra safety net: DB level unique constraint clash
+                # (should normally be caught by form.clean_username already)
+                messages.error(
+                    request, 'এই username অথবা email দিয়ে already একটা account আছে। অন্য একটি ব্যবহার করুন।')
         else:
             print("Form is not valid")
     return render(request, 'registration/register.html', {"form": form})
@@ -226,18 +231,3 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
         messages.success(
             self.request, 'Password reset successfully')
         return super().form_valid(form)
-
-
-""" 
-
-    Admin
-        - Sobkisui
-    Manager
-        - project
-        - task create
-    Employee
-        - Task read
-        - Task update
-    
-    Role Based Access Control (RBAC)
-"""
