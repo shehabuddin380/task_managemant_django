@@ -32,6 +32,16 @@ class CustomRegistrationForm(StyledFormMixin, forms.ModelForm):
         fields = ['username', 'first_name', 'last_name',
                   'password1', 'confirm_password', 'email']
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        username_exists = User.objects.filter(username=username).exists()
+
+        if username_exists:
+            raise forms.ValidationError(
+                "এই username টি already ব্যবহৃত হয়েছে। অন্য একটি username দিন।")
+
+        return username
+
     def clean_email(self):
         email = self.cleaned_data.get('email')
         email_exists = User.objects.filter(email=email).exists()
