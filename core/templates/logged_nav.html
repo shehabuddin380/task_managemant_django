@@ -5,7 +5,7 @@
           >Taskify</a
         >
         <div class="hidden md:flex space-x-4">
-          
+          <a
             href="{% url 'dashboard' %}"
             class="text-gray-600 hover:text-gray-800"
             >Dashboard</a
@@ -14,7 +14,7 @@
           <a href="{% url 'group-list' %}" class="text-gray-600 hover:text-gray-800"
             >Groups</a
           >
-          
+          <a
             href="{% url 'create-task' %}"
             class="text-gray-600 hover:text-gray-800"
             >Create Task</a
@@ -36,12 +36,12 @@
               id="user-menu"
               class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden"
             >
-              
+              <a
                 href="{% url 'admin-dashboard' %}"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >Dashboard</a
               >
-              
+              <a
                 href="{% url 'profile' %}"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >Profile</a
