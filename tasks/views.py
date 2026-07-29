@@ -39,7 +39,11 @@ def is_manager(user):
 
 
 def is_employee(user):
-    return user.groups.filter(name='Employee').exists()
+    # 'User' is the default group assigned at sign-up, before an admin
+    # promotes someone to Manager/Employee/Admin. Treat it the same as
+    # Employee so a freshly registered user lands on their own dashboard
+    # instead of being sent to the no-permission page.
+    return user.groups.filter(name__in=['Employee', 'User']).exists()
 
 
 @user_passes_test(is_manager, login_url='no-permission')
@@ -88,7 +92,7 @@ def manager_dashboard(request):
     }
     return render(request, "dashboard/manager-dashboard.html", context)
 
-@user_passes_test(is_employee)
+@user_passes_test(is_employee, login_url='no-permission')
 def employee_dashboard(request):
     counts = Task.objects.filter(assigned_to=request.user).aggregate(
         total=Count('id'),
