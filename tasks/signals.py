@@ -26,6 +26,10 @@ def notify_employees_on_task_creation(sender, instance, action, **kwargs):
                 assigned_emails,
                 fail_silently=False,
             )
+        except Exception as e:
+            # Don't let an email/SMTP failure crash task creation.
+            # Log it so we can still see what went wrong in the console.
+            logger.error(f"Failed to send task assignment email: {e}")
 
 
 @receiver(post_delete, sender=Task)
