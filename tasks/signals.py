@@ -18,7 +18,15 @@ def notify_employees_on_task_creation(sender, instance, action, **kwargs):
         if not assigned_emails:
             return
 
- 
+        try:
+            send_mail(
+                "New Task Assigned",
+                f"You have been assigned to the task: {instance.title}",
+                "slashupdates@gmail.com",
+                assigned_emails,
+                fail_silently=False,
+            )
+
 
 @receiver(post_delete, sender=Task)
 def delete_associate_details(sender, instance, **kwargs):
