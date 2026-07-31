@@ -2,15 +2,12 @@
 {% block title %}Projects{% endblock %}
 {% block content %}
 <div class="container mx-auto px-6 py-12">
-    <h1 class="text-2xl font-bold mb-6">Projects</h1>
-    <div class="bg-white rounded-lg shadow-sm divide-y">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Projects</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {% for project in projects %}
-            <div class="flex justify-between items-center p-4">
-                <span class="font-medium">{{ project.name }}</span>
-                <span class="text-gray-500 text-sm">{{ project.num_task }} task(s)</span>
-            </div>
+            
         {% empty %}
-            <p class="p-4 text-gray-500">No projects found.</p>
+            <p class="text-gray-500 col-span-full">No projects found.</p>
         {% endfor %}
     </div>
 </div>
