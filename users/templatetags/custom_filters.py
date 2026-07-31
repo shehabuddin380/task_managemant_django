@@ -16,3 +16,11 @@ def humanized_date(value):
         else:
             return f"{value.date().strftime('%B %d')}, {value.strftime('%I:%M %p')}"
     return "No login record available"
+
+
+@register.filter(name='has_group')
+def has_group(user, group_name):
+    """Usage in template: {% if request.user|has_group:"Admin" %}"""
+    if not user.is_authenticated:
+        return False
+    return user.groups.filter(name=group_name).exists()
