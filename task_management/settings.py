@@ -153,7 +153,7 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 FRONTEND_URL = config('FRONTEND_URL', default='http://127.0.0.1:8000')
 
