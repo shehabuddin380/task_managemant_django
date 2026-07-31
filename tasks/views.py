@@ -329,3 +329,10 @@ def dashboard(request):
         return redirect('admin-dashboard')
 
     return redirect('no-permission')
+
+@login_required
+@permission_required("tasks.view_task", login_url='no-permission')
+def project_task_list(request, project_id):
+    project = Project.objects.get(id=project_id)
+    tasks = Task.objects.filter(project=project).select_related('details')
+    return render(request, "project_tasks.html", {"project": project, "tasks": tasks})

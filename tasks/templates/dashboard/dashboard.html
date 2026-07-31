@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<div class='w-[1450px] mx-auto'>
+<div class='max-w-7xl mx-auto px-6'>
    {% comment %} Stats Grid  {% endcomment %}
-   <div class="grid grid-cols-4 gap-6 my-8">
+   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-8">
     <!-- Total Task  -->
     {% if role == 'manager' %}<a href="{% url 'manager-dashboard' %}">{% endif %}
     <div class="bg-white rounded-xl p-6 shadow-sm">
