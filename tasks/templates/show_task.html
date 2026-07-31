@@ -5,7 +5,25 @@
     <h1 class="text-2xl font-bold text-gray-800 mb-6">Projects</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {% for project in projects %}
-            
+            <a href="{% url 'project-tasks' project.id %}"
+               class="group bg-white rounded-xl shadow-sm p-5 flex flex-col justify-between
+                      border border-gray-100 hover:shadow-md hover:border-blue-200
+                      hover:-translate-y-0.5 transition-all duration-200">
+                <div class="flex items-start justify-between mb-3">
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                         stroke-width="2" stroke="currentColor"
+                         class="w-4 h-4 text-gray-300 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-all">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="font-semibold text-gray-800 group-hover:text-blue-700 transition-colors">
+                        {{ project.name }}
+                    </h2>
+                    <p class="text-gray-400 text-sm mt-1">{{ project.num_task }} task{{ project.num_task|pluralize }}</p>
+                </div>
+            </a>
         {% empty %}
             <p class="text-gray-500 col-span-full">No projects found.</p>
         {% endfor %}
