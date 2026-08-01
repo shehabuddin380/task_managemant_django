@@ -84,6 +84,21 @@
           </div>
         </div>
       </div>
-
+      <div id="mobile-menu" class="md:hidden hidden mt-4">
+        <a href="{% url 'dashboard' %}" class="block py-2 text-gray-600 hover:text-gray-800"
+          >Dashboard</a
+        >
+        <a href="{% url 'view-task' %}" class="block py-2 text-gray-600 hover:text-gray-800"
+          >Tasks</a
+        >
+        {% if request.user|has_group:"Admin" %}
+        <a href="{% url 'group-list' %}" class="block py-2 text-gray-600 hover:text-gray-800"
+          >Groups</a
+        >
+        {% endif %}
+        <a href="{% url 'create-task' %}" class="block py-2 text-gray-600 hover:text-gray-800"
+          >Create Task</a
+        >
+      </div>
     </nav>
   </header>
