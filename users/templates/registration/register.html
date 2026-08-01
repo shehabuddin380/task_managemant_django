@@ -24,7 +24,50 @@
 <div class="min-h-[85vh] flex bg-[#FAFAF8]">
 
   <!-- Signature panel -->
+  <div class="hidden lg:flex lg:w-[44%] relative overflow-hidden bg-gradient-to-br from-[#161B33] to-[#232B52] px-12 py-14 flex-col justify-between">
 
+    <div>
+      <span class="font-display font-extrabold text-2xl text-white tracking-tight">Taskify</span>
+      <p class="text-[#9AA3C0] text-sm mt-2">Where scattered work becomes a shared list.</p>
+    </div>
+
+    <!-- Task card stack: the signature element -->
+    <div class="space-y-3 my-10">
+      <div class="task-card bg-white/[0.06] border border-white/10 backdrop-blur-sm rounded-xl px-5 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="w-4 h-4 rounded-[5px] border-2 border-[#4B5684] flex-shrink-0"></span>
+          <span class="text-white text-sm font-medium">Design onboarding flow</span>
+        </div>
+        <span class="text-[10px] font-semibold tracking-wide uppercase bg-[#F5B841]/20 text-[#F5B841] px-2 py-1 rounded-md">High</span>
+      </div>
+
+      <div class="task-card bg-white/[0.06] border border-white/10 backdrop-blur-sm rounded-xl px-5 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="w-4 h-4 rounded-[5px] bg-[#2DD4BF] flex items-center justify-center flex-shrink-0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#161B33" stroke-width="3" class="w-2.5 h-2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </span>
+          <span class="text-white/60 text-sm font-medium line-through decoration-white/30">Fix login redirect bug</span>
+        </div>
+        <span class="text-[10px] font-semibold tracking-wide uppercase bg-[#2DD4BF]/20 text-[#2DD4BF] px-2 py-1 rounded-md">Done</span>
+      </div>
+
+      <div class="task-card bg-white/[0.06] border border-white/10 backdrop-blur-sm rounded-xl px-5 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="w-4 h-4 rounded-[5px] border-2 border-[#4B5684] flex-shrink-0"></span>
+          <span class="text-white text-sm font-medium">Write Q3 project brief</span>
+        </div>
+        <span class="text-[10px] font-semibold tracking-wide uppercase bg-white/10 text-white/60 px-2 py-1 rounded-md">Medium</span>
+      </div>
+    </div>
+
+    <p class="text-[#6B7399] text-xs leading-relaxed max-w-xs">
+      Every task assigned, tracked, and closed out — visible to the people who need to see it, and no one else.
+    </p>
+  </div>
+
+  <!-- Form panel -->
 
 </div>
 {% endblock content %}
