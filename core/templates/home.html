@@ -1,67 +1,76 @@
 ﻿{% extends "base.html" %}
 {% block title %}TaskMaster - Home{% endblock %}
 {% block content %}
-<!-- Hero Section -->
-<section class="bg-blue-600 text-white py-32 md:py-40">
-    <div class="container mx-auto px-6 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold mb-6">
-        Streamline Your Workflow with TaskMaster
-      </h1>
-      <p class="text-xl mb-12">
-        Empower your team with our intuitive task management solution
-      </p>
-      <a href="{% url 'sign-up' %}" class="bg-white text-blue-600 px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition duration-300">Get Started</a>
-    </div>
-  </section>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap');
+  .font-display { font-family: 'Sora', 'Inter', sans-serif; }
 
-  <!-- Features Section -->
-  <section id="features" class="py-24 md:py-32">
-    <div class="container mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center mb-16">
-        Tailored for Every Role
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-        <div class="bg-white rounded-lg shadow-md p-8">
-          <h3 class="text-2xl font-semibold mb-6">Admin</h3>
-          <ul class="list-disc list-inside text-gray-600 space-y-3">
-            <li>Manage user roles and permissions</li>
-            <li>Generate comprehensive reports</li>
-            <li>Configure system-wide settings</li>
-            <li>Monitor team performance</li>
-          </ul>
+  .task-card { animation: cardIn 0.6s ease-out both; }
+  .task-card:nth-child(1) { animation-delay: 0.05s; }
+  .task-card:nth-child(2) { animation-delay: 0.18s; }
+  .task-card:nth-child(3) { animation-delay: 0.31s; }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .task-card { animation: none; }
+  }
+</style>
+
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-[#161B33] to-[#232B52] text-white py-24 md:py-32 overflow-hidden">
+  <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+    <div>
+      <span class="inline-block text-xs font-semibold tracking-widest uppercase text-[#2DD4BF] bg-[#2DD4BF]/10 px-3 py-1 rounded-full mb-6">
+        Task management, simplified
+      </span>
+      <h1 class="font-display font-bold text-4xl md:text-5xl leading-tight mb-6">
+        Streamline your workflow with TaskMaster
+      </h1>
+      <p class="text-lg text-[#9AA3C0] mb-10 max-w-md">
+        Empower your team with an intuitive task management solution — assign, track, and close out work without the chaos.
+      </p>
+      <a href="{% url 'sign-up' %}"
+         class="inline-block bg-[#2DD4BF] text-[#161B33] px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#25b8a5] transition-colors">
+        Get Started
+      </a>
+    </div>
+
+    <!-- Signature visual: live task board -->
+    <div class="space-y-3">
+      <div class="task-card bg-white/[0.06] border border-white/10 backdrop-blur-sm rounded-xl px-5 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="w-4 h-4 rounded-[5px] border-2 border-[#4B5684] flex-shrink-0"></span>
+          <span class="text-white text-sm font-medium">Design onboarding flow</span>
         </div>
-        <div class="bg-white rounded-lg shadow-md p-8">
-          <h3 class="text-2xl font-semibold mb-6">Manager</h3>
-          <ul class="list-disc list-inside text-gray-600 space-y-3">
-            <li>Create and assign tasks to employees</li>
-            <li>Track project progress in real-time</li>
-            <li>Set deadlines and priorities</li>
-            <li>Generate team performance reports</li>
-          </ul>
+        <span class="text-[10px] font-semibold tracking-wide uppercase bg-[#F5B841]/20 text-[#F5B841] px-2 py-1 rounded-md">High</span>
+      </div>
+
+      <div class="task-card bg-white/[0.06] border border-white/10 backdrop-blur-sm rounded-xl px-5 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="w-4 h-4 rounded-[5px] bg-[#2DD4BF] flex items-center justify-center flex-shrink-0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#161B33" stroke-width="3" class="w-2.5 h-2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </span>
+          <span class="text-white/60 text-sm font-medium line-through decoration-white/30">Fix login redirect bug</span>
         </div>
-        <div class="bg-white rounded-lg shadow-md p-8">
-          <h3 class="text-2xl font-semibold mb-6">Employee</h3>
-          <ul class="list-disc list-inside text-gray-600 space-y-3">
-            <li>View and manage assigned tasks</li>
-            <li>Collaborate with team members</li>
-            <li>Update task status and progress</li>
-            <li>Track personal productivity</li>
-          </ul>
+        <span class="text-[10px] font-semibold tracking-wide uppercase bg-[#2DD4BF]/20 text-[#2DD4BF] px-2 py-1 rounded-md">Done</span>
+      </div>
+
+      <div class="task-card bg-white/[0.06] border border-white/10 backdrop-blur-sm rounded-xl px-5 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="w-4 h-4 rounded-[5px] border-2 border-[#4B5684] flex-shrink-0"></span>
+          <span class="text-white text-sm font-medium">Write Q3 project brief</span>
         </div>
+        <span class="text-[10px] font-semibold tracking-wide uppercase bg-white/10 text-white/60 px-2 py-1 rounded-md">Medium</span>
       </div>
     </div>
-  </section>
 
-  <!-- Call to Action -->
-  <section id="pricing" class="bg-gray-200 py-24 md:py-32">
-    <div class="container mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold mb-6">
-        Ready to Boost Your Team's Productivity?
-      </h2>
-      <p class="text-xl mb-12">
-        Join thousands of organizations already using TaskMaster
-      </p>
-      <a href="{% url 'sign-up' %}" class="bg-blue-500 text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-blue-600 transition duration-300">Start Free Trial</a>
-    </div>
-  </section>
-  {% endblock %}
+  </div>
+</section>
+
+{% endblock %}
