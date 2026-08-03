@@ -31,6 +31,32 @@
           {% endfor %}
       {% endif %}
 
+      <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        <div>
+          <label for="contact-name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+          <input type="text" id="contact-name" name="name"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#2DD4BF] focus:border-transparent"
+                 placeholder="Your name" />
+        </div>
+        <div>
+          <label for="contact-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <input type="email" id="contact-email" name="email"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#2DD4BF] focus:border-transparent"
+                 placeholder="you@example.com" />
+        </div>
+        <div>
+            <label for="contact-message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+          <textarea id="contact-message" name="message" rows="4"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#2DD4BF] focus:border-transparent"
+                    placeholder="How can we help?">
+            </textarea>
+        </div>
+        <button type="submit"
+                class="w-full bg-[#161B33] hover:bg-[#232B52] text-white font-medium px-4 py-2.5 rounded-lg mt-2 transition-colors">
+          Send Message
+        </button>
+      </form>
     </div>
 
   </div>
