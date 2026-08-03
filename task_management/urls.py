@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from core.views import home, no_permission
+from core.views import home, no_permission, contact
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -10,6 +10,7 @@ urlpatterns = [
     path("tasks/", include("tasks.urls")),
     path("users/", include('users.urls')),
     path('', home, name="home"),
+    path('contact/', contact, name='contact'),
     path('no-permission/', no_permission, name='no-permission')
 ]
 
