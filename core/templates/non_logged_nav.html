@@ -5,8 +5,8 @@
         <div class="hidden md:flex space-x-4">
           <a href="{% url 'home' %}#features" class="text-gray-600 hover:text-gray-800">Features</a>
           <a href="{% url 'home' %}#pricing" class="text-gray-600 hover:text-gray-800">Pricing</a>
-          <a href="{% url 'home' %}" class="text-gray-600 hover:text-gray-800">About</a>
-          <a href="{% url 'home' %}" class="text-gray-600 hover:text-gray-800">Contact</a>
+          <a href="{% url 'home' %}#about" class="text-gray-600 hover:text-gray-800">About</a>
+          <a href="{% url 'contact' %}" class="text-gray-600 hover:text-gray-800">Contact</a>
         </div>
         <div class="md:hidden">
           <button id="menu-toggle" class="text-gray-600 hover:text-gray-800 focus:outline-none">
@@ -23,8 +23,8 @@
       <div id="mobile-menu" class="md:hidden hidden mt-4">
         <a href="{% url 'home' %}#features" class="block py-2 text-gray-600 hover:text-gray-800">Features</a>
         <a href="{% url 'home' %}#pricing" class="block py-2 text-gray-600 hover:text-gray-800">Pricing</a>
-        <a href="{% url 'home' %}" class="block py-2 text-gray-600 hover:text-gray-800">About</a>
-        <a href="{% url 'home' %}" class="block py-2 text-gray-600 hover:text-gray-800">Contact</a>
+        <a href="{% url 'home' %}#about" class="block py-2 text-gray-600 hover:text-gray-800">About</a>
+        <a href="{% url 'contact' %}" class="block py-2 text-gray-600 hover:text-gray-800">Contact</a>
         <a href="{% url 'sign-in' %}" class="block py-2 text-gray-600 hover:text-gray-800">Sign In</a>
         <a href="{% url 'sign-up' %}" class="block py-2 text-gray-600 hover:text-gray-800">Sign Up</a>
       </div>

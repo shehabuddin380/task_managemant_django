@@ -772,6 +772,10 @@ video {
   height: 2rem;
 }
 
+.min-h-\[80vh\] {
+  min-height: 80vh;
+}
+
 .min-h-\[85vh\] {
   min-height: 85vh;
 }
@@ -920,8 +924,8 @@ video {
   gap: 0.25rem;
 }
 
-.gap-16 {
-  gap: 4rem;
+.gap-14 {
+  gap: 3.5rem;
 }
 
 .gap-2 {
@@ -946,10 +950,6 @@ video {
 
 .gap-8 {
   gap: 2rem;
-}
-
-.gap-14 {
-  gap: 3.5rem;
 }
 
 .-space-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -1018,6 +1018,10 @@ video {
 
 .rounded {
   border-radius: 0.25rem;
+}
+
+.rounded-2xl {
+  border-radius: 1rem;
 }
 
 .rounded-\[5px\] {
@@ -1350,6 +1354,11 @@ video {
 .py-2\.5 {
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
+}
+
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 .py-24 {
@@ -1753,9 +1762,24 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.focus\:border-transparent:focus {
+  border-color: transparent;
+}
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.focus\:ring-2:focus {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus\:ring-\[\#2DD4BF\]:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(45 212 191 / var(--tw-ring-opacity, 1));
 }
 
 .group:hover .group-hover\:translate-x-0\.5 {
@@ -1808,6 +1832,11 @@ video {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .md\:py-28 {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+
   .md\:py-32 {
     padding-top: 8rem;
     padding-bottom: 8rem;
@@ -1836,16 +1865,12 @@ video {
     display: flex;
   }
 
-  .lg\:w-\[44\%\] {
-    width: 44%;
-  }
-
   .lg\:w-1\/2 {
     width: 50%;
   }
 
-  .lg\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .lg\:w-\[44\%\] {
+    width: 44%;
   }
 
   .lg\:grid-cols-3 {
