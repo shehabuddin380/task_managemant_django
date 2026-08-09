@@ -89,4 +89,17 @@
   }
 </style>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var input = document.getElementById('{{ form.profile_image.id_for_label }}');
+    var preview = document.getElementById('avatar-preview');
+    if (input) {
+      input.addEventListener('change', function () {
+        if (input.files && input.files[0]) {
+          preview.src = URL.createObjectURL(input.files[0]);
+        }
+      });
+    }
+  });
+</script>
 {% endblock content %}
