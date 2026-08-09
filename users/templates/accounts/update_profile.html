@@ -5,5 +5,79 @@
   @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap');
   .font-display { font-family: 'Sora', 'Inter', sans-serif; }
 </style>
+<div class="bg-[#FAFAF8] min-h-screen">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-sm">
+      <div class="p-6">
+        <h2 class="font-display font-semibold text-lg text-[#1F2937]">Menu</h2>
+      </div>
+      <nav class="mt-2">
+        <a href="{% url 'profile' %}" class="block py-2.5 px-6 text-gray-600 hover:bg-gray-50 hover:text-[#161B33]">Profile</a>
+        <a href="{% url 'edit_profile' %}" class="block py-2.5 px-6 text-[#161B33] font-medium bg-[#161B33]/5 border-r-4 border-[#161B33]">Edit Profile</a>
+        <a href="{% url 'password_change' %}" class="block py-2.5 px-6 text-gray-600 hover:bg-gray-50 hover:text-[#161B33]">Change Password</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+      <h1 class="font-display font-bold text-3xl text-[#1F2937] mb-8">Edit Profile</h1>
+
+      {% if messages %}
+          {% for message in messages %}
+              <div class="px-3 py-2 {% if message.tags == 'success' %}bg-green-50 border border-green-200 text-green-700{% else %}bg-red-50 border border-red-200 text-red-700{% endif %} text-sm rounded-lg mb-6 max-w-2xl">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+
+      <form method="POST" enctype="multipart/form-data" class="bg-white rounded-xl shadow-sm p-8 max-w-2xl">
+        {% csrf_token %}
+
+        <!-- Profile image with live preview -->
+        <div class="flex items-center gap-5 mb-8 pb-8 border-b border-gray-100">
+          <img id="avatar-preview"
+               src="{% if form.instance.profile_image %}{{ form.instance.profile_image.url }}{% else %}https://ui-avatars.com/api/?name={{ form.instance.username }}{% endif %}"
+               alt="Profile preview"
+               class="w-20 h-20 rounded-full object-cover border border-gray-200" />
+          <div>
+            <label for="{{ form.profile_image.id_for_label }}"
+                   class="inline-block cursor-pointer bg-[#161B33] hover:bg-[#232B52] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+              Change photo
+            </label>
+            {{ form.profile_image }}
+            <p class="text-xs text-gray-400 mt-2">JPG or PNG, at least 200x200px.</p>
+          </div>
+        </div>
+
+        <div class="space-y-5">
+          {% for field in form %}
+              {% if field.name != 'profile_image' %}
+                  <div>
+                      <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                          {{ field.label }}
+                      </label>
+                      {{ field }}
+                      {% if field.errors %}
+                          <ul class="mt-1 space-y-0.5">
+                              {% for error in field.errors %}
+                                  <li class="text-xs text-red-600">{{ error }}</li>
+                              {% endfor %}
+                          </ul>
+                      {% endif %}
+                  </div>
+              {% endif %}
+          {% endfor %}
+        </div>
+
+        <button type="submit"
+                class="w-full sm:w-auto bg-[#161B33] hover:bg-[#232B52] text-white font-medium px-6 py-2.5 rounded-lg mt-8 transition-colors">
+          Update Profile
+        </button>
+      </form>
+    </main>
+  </div>
+</div>
+
 
 {% endblock content %}
