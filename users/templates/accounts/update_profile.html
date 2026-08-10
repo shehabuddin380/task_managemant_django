@@ -79,16 +79,6 @@
   </div>
 </div>
 
-<style>
-  /* Hide the default file input; the "Change photo" label triggers it */
-  #{{ form.profile_image.id_for_label }} {
-    position: absolute;
-    width: 1px; height: 1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-  }
-</style>
-
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var input = document.getElementById('{{ form.profile_image.id_for_label }}');
