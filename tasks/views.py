@@ -147,6 +147,11 @@ class CreateTask(ContextMixin, LoginRequiredMixin, PermissionRequiredMixin, View
     2. PermissionRequiredMixin
     """
 
+    def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            return redirect(self.login_url)
+        return redirect('no-permission')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['task_form'] = kwargs.get('task_form', TaskModelForm())
@@ -177,7 +182,6 @@ class CreateTask(ContextMixin, LoginRequiredMixin, PermissionRequiredMixin, View
         
         context = self.get_context_data(task_form=task_form, task_detail_form=task_detail_form)
         return render(request, self.template_name, context)
-
 
 @login_required
 @permission_required("tasks.change_task", login_url='no-permission')
