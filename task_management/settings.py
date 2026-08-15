@@ -27,7 +27,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'tasks',
     'users',
     'core'
@@ -86,6 +88,8 @@ WSGI_APPLICATION = 'task_management.wsgi.application'
 # }
 
 # For Postgres
+# In production, point these DB_* env vars at your cloud Postgres
+# (e.g. Neon or Supabase) connection details via Vercel's Environment Variables.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -142,18 +146,36 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Media storage: Vercel has no persistent disk, so uploaded files (profile
+# pictures, task assets) must live somewhere external. In production, route
+# them through Cloudinary. Locally (DEBUG=True) they still save to MEDIA_ROOT
+# as before, so local development is unaffected.
+if not DEBUG:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME', default=''),
+        'API_KEY': config('CLOUDINARY_API_KEY', default=''),
+        'API_SECRET': config('CLOUDINARY_API_SECRET', default=''),
+    }
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Console backend is handy for local development (prints emails to the
+# terminal instead of actually sending them). In production we want the
+# real SMTP backend so confirmation/reset emails actually get delivered.
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 FRONTEND_URL = config('FRONTEND_URL', default='http://127.0.0.1:8000')
 
