@@ -159,6 +159,16 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # persistent disk and user-uploaded files (profile pictures, task
 # attachments) need to live somewhere external. Locally (DEBUG=True) media
 # still saves to MEDIA_ROOT on disk as normal, so local dev is unaffected.
+#
+# NOTE: 'cloudinary_storage' is listed in INSTALLED_APPS before
+# 'django.contrib.staticfiles', so Django uses cloudinary_storage's
+# collectstatic command instead of the built-in one. That command reads
+# the legacy settings.STATICFILES_STORAGE attribute directly rather than
+# deriving it from STORAGES, so both must be set for collectstatic to run
+# without error even though we're using WhiteNoise, not Cloudinary, for
+# static files.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
