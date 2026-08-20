@@ -98,7 +98,7 @@ DATABASES = {
         'USER': config('DB_USER', default=''),
         'PASSWORD': config('DB_PASSWORD', default=''),
         'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', cast=int),
+        'PORT': config('DB_PORT', default=5432, cast=int),
         'OPTIONS': {'sslmode': config('DB_SSLMODE', default='prefer')},
     }
 }
@@ -148,12 +148,27 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Media storage: Vercel has no persistent disk, so uploaded files (profile
-# pictures, task assets) must live somewhere external. In production, route
-# them through Cloudinary. Locally (DEBUG=True) they still save to MEDIA_ROOT
-# as before, so local development is unaffected.
+# Storage backends (Django 5.1+ STORAGES API).
+#
+# staticfiles -> WhiteNoise. Static assets (CSS/JS/images bundled with the
+# app) are served directly by the app itself via WhiteNoise, which also
+# hashes filenames and compresses them for good browser caching. No need
+# to push these to Cloudinary.
+#
+# default (media) -> Cloudinary in production, since Vercel has no
+# persistent disk and user-uploaded files (profile pictures, task
+# attachments) need to live somewhere external. Locally (DEBUG=True) media
+# still saves to MEDIA_ROOT on disk as normal, so local dev is unaffected.
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 if not DEBUG:
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    STORAGES["default"] = {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    }
     CLOUDINARY_STORAGE = {
         'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME', default=''),
         'API_KEY': config('CLOUDINARY_API_KEY', default=''),
