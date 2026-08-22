@@ -175,6 +175,13 @@ STORAGES = {
     },
 }
 
+# Django admin's own base.css references a couple of icon files that some
+# admin versions don't actually ship (e.g. admin/img/sorting-icons.svg).
+# WhiteNoise's manifest storage is strict by default and fails the whole
+# collectstatic run over these harmless dangling references. Turning strict
+# mode off makes it log a warning and continue instead of erroring out.
+WHITENOISE_MANIFEST_STRICT = False
+
 if not DEBUG:
     STORAGES["default"] = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
