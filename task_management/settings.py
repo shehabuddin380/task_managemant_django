@@ -171,16 +171,19 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STORAGES = {
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        # NOTE: CompressedManifestStaticFilesStorage (the hashed-filename
+        # variant) rewrites url(...) references inside CSS during
+        # collectstatic, and crashes the whole build if any referenced file
+        # can't be found. Django admin's own base.css references icon files
+        # that don't exist in some builds (e.g. admin/img/sorting-icons.svg),
+        # which isn't something we control and isn't fixable via settings
+        # (WHITENOISE_MANIFEST_STRICT only affects runtime lookups, not this
+        # build-time step). CompressedStaticFilesStorage still gzips/brotli
+        # compresses files for WhiteNoise to serve, it just skips the
+        # hashed-filename manifest step that was crashing the build.
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
-
-# Django admin's own base.css references a couple of icon files that some
-# admin versions don't actually ship (e.g. admin/img/sorting-icons.svg).
-# WhiteNoise's manifest storage is strict by default and fails the whole
-# collectstatic run over these harmless dangling references. Turning strict
-# mode off makes it log a warning and continue instead of erroring out.
-WHITENOISE_MANIFEST_STRICT = False
 
 if not DEBUG:
     STORAGES["default"] = {
