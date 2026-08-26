@@ -171,17 +171,21 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STORAGES = {
     "staticfiles": {
-        # NOTE: CompressedManifestStaticFilesStorage (the hashed-filename
-        # variant) rewrites url(...) references inside CSS during
-        # collectstatic, and crashes the whole build if any referenced file
-        # can't be found. Django admin's own base.css references icon files
-        # that don't exist in some builds (e.g. admin/img/sorting-icons.svg),
-        # which isn't something we control and isn't fixable via settings
-        # (WHITENOISE_MANIFEST_STRICT only affects runtime lookups, not this
-        # build-time step). CompressedStaticFilesStorage still gzips/brotli
-        # compresses files for WhiteNoise to serve, it just skips the
-        # hashed-filename manifest step that was crashing the build.
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        # NOTE: Vercel's Django integration only recognizes a specific set
+        # of static storage backends (StaticFilesStorage,
+        # ManifestStaticFilesStorage, and WhiteNoise's
+        # CompressedManifestStaticFilesStorage) and handles their output
+        # paths accordingly. Using an unrecognized backend (e.g. WhiteNoise's
+        # non-manifest CompressedStaticFilesStorage) causes Vercel to
+        # miscompute static file paths during its own build step.
+        #
+        # So we stay on the Manifest variant, but via our own subclass
+        # (task_management/storage.py) that tolerates missing file
+        # references instead of crashing the whole collectstatic run -
+        # which is what happens by default when Django admin's own CSS
+        # references an icon file that isn't shipped in some Django
+        # versions (e.g. admin/img/sorting-icons.svg).
+        "BACKEND": "task_management.storage.IgnoreMissingManifestStaticFilesStorage",
     },
 }
 
