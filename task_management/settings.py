@@ -171,20 +171,19 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STORAGES = {
     "staticfiles": {
-        # NOTE: Vercel's Django integration only recognizes a specific set
-        # of static storage backends (StaticFilesStorage,
-        # ManifestStaticFilesStorage, and WhiteNoise's
-        # CompressedManifestStaticFilesStorage) and handles their output
-        # paths accordingly. Using an unrecognized backend (e.g. WhiteNoise's
-        # non-manifest CompressedStaticFilesStorage) causes Vercel to
-        # miscompute static file paths during its own build step.
+        # NOTE: Vercel serves static files from its own CDN in production -
+        # WhiteNoise is only active locally with `vercel dev`. So we use
+        # Django's own ManifestStaticFilesStorage (one of the backends
+        # Vercel's Django integration officially recognizes) rather than
+        # WhiteNoise's compressed variant, which was crashing collectstatic
+        # with a wrong on-disk path during its (here, unnecessary) gzip/
+        # brotli pre-compression step.
         #
-        # So we stay on the Manifest variant, but via our own subclass
-        # (task_management/storage.py) that tolerates missing file
-        # references instead of crashing the whole collectstatic run -
-        # which is what happens by default when Django admin's own CSS
-        # references an icon file that isn't shipped in some Django
-        # versions (e.g. admin/img/sorting-icons.svg).
+        # Our subclass (task_management/storage.py) also turns off strict
+        # manifest checking, since Django admin's own CSS references icon
+        # files (e.g. admin/img/sorting-icons.svg) that aren't shipped in
+        # some Django versions - harmless in practice, but fatal to
+        # collectstatic by default.
         "BACKEND": "task_management.storage.IgnoreMissingManifestStaticFilesStorage",
     },
 }
