@@ -230,3 +230,12 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_BROWSER_XSS_FILTER = True
+
+# Vercel deploys behind a reverse proxy, so Django needs to know which
+# origins to trust for CSRF-protected POST requests (login, forms, etc.).
+# Without this, form submissions fail with a 403 CSRF error even though
+# ALLOWED_HOSTS is set correctly.
+CSRF_TRUSTED_ORIGINS = config(
+    'CSRF_TRUSTED_ORIGINS',
+    default='https://*.vercel.app',
+).split(',')
