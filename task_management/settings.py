@@ -171,20 +171,18 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STORAGES = {
     "staticfiles": {
-        # NOTE: Vercel serves static files from its own CDN in production -
-        # WhiteNoise is only active locally with `vercel dev`. So we use
-        # Django's own ManifestStaticFilesStorage (one of the backends
-        # Vercel's Django integration officially recognizes) rather than
-        # WhiteNoise's compressed variant, which was crashing collectstatic
-        # with a wrong on-disk path during its (here, unnecessary) gzip/
-        # brotli pre-compression step.
+        # NOTE: Vercel serves static files from its own CDN in production,
+        # separately from the running Django app. ManifestStaticFilesStorage
+        # requires the staticfiles.json manifest generated at build time to
+        # still be readable at runtime (to translate {% static %} tags into
+        # hashed URLs) - but that manifest isn't reliably available inside
+        # Vercel's serverless function environment, causing "Missing
+        # staticfiles manifest entry" errors on every page load.
         #
-        # Our subclass (task_management/storage.py) also turns off strict
-        # manifest checking, since Django admin's own CSS references icon
-        # files (e.g. admin/img/sorting-icons.svg) that aren't shipped in
-        # some Django versions - harmless in practice, but fatal to
-        # collectstatic by default.
-        "BACKEND": "task_management.storage.IgnoreMissingManifestStaticFilesStorage",
+        # Plain StaticFilesStorage avoids this entirely: no manifest, no
+        # hashed filenames, {% static 'css/output.css' %} just resolves to
+        # '/static/css/output.css' directly, which Vercel's CDN serves fine.
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
