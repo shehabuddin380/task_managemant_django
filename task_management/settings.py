@@ -167,7 +167,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # deriving it from STORAGES, so both must be set for collectstatic to run
 # without error even though we're using WhiteNoise, not Cloudinary, for
 # static files.
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STORAGES = {
     "staticfiles": {
