@@ -140,6 +140,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Tell WhiteNoise (already in MIDDLEWARE) to serve static files directly
+# from the app's source directories at runtime, rather than relying on
+# Vercel's CDN-based static routing. Per Vercel's own docs, setting this
+# also means STATIC_ROOT/collectstatic output isn't strictly required for
+# serving - useful here since Vercel's CDN routing wasn't picking up our
+# static files even though collectstatic succeeded without errors.
+WHITENOISE_USE_FINDERS = True
+
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
